@@ -121,3 +121,42 @@ class ChessBoard:
             return True
 
         return False
+     # list of all allowed moves for this board
+    def get_all_allowed_moves(self, team: str):
+        allowed_moves = []
+        for row in self.board:
+            for _piece in row:
+                if _piece != ' ':
+                    if _piece.team == team:
+                        allowed_moves += _piece.get_allowed_moves(self)
+
+        return allowed_moves
+
+    # list of (row, column) positions of every piece of the specified team
+    def get_team_positions(self, team: str):
+        positions = []
+
+        for row in self.board:
+            for _piece in row:
+                if _piece != ' ':
+                    if _piece.team == team:
+                        pos = (_piece.row, _piece.col)
+                        positions.append(pos)
+
+        return positions
+
+    # get a piece at a cell
+    def get_piece(self, row: int, col: int):
+        return self.board[row][col]
+
+    # get the team of the piece at specified coordinates
+    def get_team(self, row: int, col: int):
+        if self.is_cell_empty(row, col):
+            return None
+
+        return self.board[row][col].team
+
+    # get the name of a piece at specified string coordinates
+    def get_piece_name(self, pos):
+        row, col = extras.parse_position(pos)
+        return self.board[row][col].name
