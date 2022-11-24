@@ -91,3 +91,33 @@ class ChessBoard:
                 p = '🙾' if self.board[i][j] == ' ' else self.board[i][j].symbol
                 print('', p, sep=' ', end=' ')
             print()
+            
+  def in_range(self, row: int, col: int):
+        if 0 <= row < self.size_ and 0 <= col < self.size_:
+            return True
+        return False
+
+    # check if a particular cell is empty
+    def is_cell_empty(self, row: int, col: int):
+        if self.board[row][col] == ' ':
+            return True
+        return False
+
+    def team_at_destination(self, _piece: piece.Piece, row: int, col: int) -> bool:
+        if self.is_cell_empty(row, col):
+            return False
+
+        if self.get_piece(row, col).team == _piece.team:
+            return True
+
+        return False
+
+    # check if there is a member of opposite team at destination
+    def enemy_at_destination(self, _piece: piece.Piece, row: int, col: int):
+        if self.is_cell_empty(row, col):
+            return False
+
+        if self.get_piece(row, col).team != _piece.team:
+            return True
+
+        return False
